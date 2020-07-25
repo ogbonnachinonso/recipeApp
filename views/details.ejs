@@ -1,0 +1,53 @@
+<%- include('partials/header')-%>
+  <div class="container">
+    <h1 class="text-center ful mb-2 dar">Full Details</h1>
+    <div class="card mb-3 ">
+      <div class="row no-gutter">
+
+            <div class="col-md-4">
+              <div class=" mb-5 rounded shadow-lg">
+                <img src="<%= store.img %>" alt="card image" width="380" height="400">
+                <br>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body ml-10 dar">
+                <h2 class="card-title">
+                  Name:
+                  <%= store.name %>
+                </h2>
+                <hr>
+                <br>
+                <h2 class="card-title">
+                  Title:
+                  <%= store.title %>
+                </h2>
+                <hr>
+                <br>
+                <p class="card-text">
+                  <b>Ingredients:</b>
+                  <%= store.ingredients %>
+                </p>
+                <hr>
+                <p class="card-text">
+                  <b>Instructions:</b>
+                  <%= store. instructions %>
+                </p>
+                <hr>
+                <br>
+              </div>
+            </div>
+                <br>
+                <br>
+      </div>
+    </div>
+    <a href="/" class="btn but">Back to Home</a>
+    <a href="/search" target="_blank" class="btn but">Search</a>
+   
+  </div>
+  <br>
+  <br><br>
+  <br>
+  <%- include('partials/about')-%>
+ 
+  <%- include('partials/footer')-%>

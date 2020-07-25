@@ -1,0 +1,62 @@
+<%- include('partials/header') -%>
+
+<div id="demo" class="carousel slide " data-ride="carousel">
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../images/dangold.jpg" alt="Rice" style="width: 100%" class="go mt-2 ">
+      <div class="carousel-caption">
+        <h1>Recipes</h1>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="../images/brooke.jpg" alt="Salad" style="width: 100%" class="go">
+    </div>
+    <div class="carousel-item">
+      <img src="../images/lily.jpg" alt="beavrages" style="width: 100%" class="go">
+    </div>
+    <div class="carousel-item">
+      <img src="../images/brooke.jpg" alt="beavrages" style="width: 100%" class="go">
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon bg-warning"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon bg-warning"></span>
+  </a>
+</div>
+
+<section class="lists-page">
+
+  <p class="py-3 px-4 ppp">Recipe App is an amazing platform for finding different recipe, we provide you with a set of
+    instructions for making or preparing something, especially a food dish. Below is a list of recipes we have. Click on
+    the button to see details of that particular recipe. You can add to the list by using this button <a
+      href="/addrecipe" class="btn butt text-white">Add</a> or addrecipe link on the nav bar. Also for easy access, you can search
+    for a meal type by clicking this button <a href="/search" class="btn but">Search</a>or the search link on the nav
+    bar to search for a particular type of recipe</p>
+  <div class="container list-card">
+    <h4 class="text-center batch-title ppp">RECIPE LIST</h4>
+    <div class="row text-center">
+      <% stores.forEach((store)=>{ %>
+      <div class="col-sm-3">
+        <div class="card mt-3 rounded shadow-lg">
+          <img class="card-img-top" src="<%= store.img %>" alt="Card image" />
+          <div class="card-body">
+            <p class="card-text">
+              <a href="/details/<%= store.id %>" class="btn but btn-success"><%= store.title %></a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+
+</section>
+<br><br><br><br>
+ 
+<%- include('partials/about') -%>
+<%- include('partials/footer') -%>

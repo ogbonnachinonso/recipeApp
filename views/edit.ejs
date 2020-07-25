@@ -1,0 +1,19 @@
+<%- include('partials/header')-%>
+<div class="container mt-5 py-5 px-2 w-50 ">
+  
+    <%- include('partials/message')-%>
+    
+  <h2 class="mb-4 text-center">Edit Recipe</h2>
+  <form action="/edit/<%= store.id %>" method="POST">  
+    <input type="text" name="name" class="form-control mt-2" placeholder="Recipe Name" value="<%= store.name %>">
+    <input type="text" name="title" class="form-control" placeholder="Recipe Title" value="<%= store.title %>">
+    
+    <input type="text" name="ingredients" class="form-control" placeholder="Recipe Ingredients" value="<%= store.ingredients %>">
+    <input type="text" name="instructions" class="form-control" placeholder="Recipe Instruction" value="<%= store.instructions %>">
+
+    <input type="text" name="img" class="form-control" placeholder="Recipe Imagurl" value="<%= store.img %>">
+   
+    <button class="btn but btn-block mt-3 mb-5" type="submit">Update Recipe</button>
+  </form>
+</div>
+<%- include('partials/footer')-%>

@@ -1,0 +1,122 @@
+.footer {
+  background: #130c2b;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
+  padding: 0px 0;
+  color: #ffff;
+  position: fixed;
+  font-size: 14px;
+  height: 50px;
+  width: 100%;
+  margin-top:0px; 
+  bottom:0px; 
+}
+.aut{
+  align-items: center;
+  margin-left: 100px;
+  margin-top: 50px;
+}
+.bit{
+  background: linear-gradient(45deg,#ec8907, #c55d08e0);
+  color:#ffffff;
+}
+.dash{
+  margin-top:60px;
+}
+
+.dashboard{
+  margin-left:90px; 
+}
+.bash{
+  margin-bottom: 95px;
+  /* margin-left:120px; */
+
+}
+.search{
+  background: linear-gradient(45deg, #190f3ae0, #120f3ae0), url("../images/dangold.jpg" ),  center top no-repeat;
+  height: 25rem;
+  width: 100%;
+}
+.butt{
+  background: linear-gradient(45deg,#2dd4c1, #009081);
+}
+.but{
+  background: linear-gradient(45deg,#190F3A, #190F3A);
+  color:#ffffff;
+}
+.dar{
+  color:#190F3A;
+}
+.dea{
+  margin-top: 60px;
+  color:#190F3A;
+}
+.ppp{
+  color:#190F3A ;
+  font-size: 17px;
+  font-weight: bold;
+}
+.dark{
+  background: linear-gradient(45deg, #1e1b47e0,#190f3ae0);
+}
+
+  .navbar{
+    background: #130c2b;
+    /* padding: 15px 10px; */
+    height: 52px;
+     position: fixed; 
+    left: 0;
+    top: 0;
+    right: 0;
+    transition: all 0.5s;
+    z-index: 997;
+  }
+  li a:hover {
+    background-color: #ad0e02;
+    color: #dbb50c;
+  }
+  body {
+    font-family: "Open Sans", sans-serif;
+    overflow-x: hidden;
+  }
+  #about{
+    color:#190F3A;
+    font-size: 17px;
+  }
+  #contact{
+    color:#190F3A;
+    font-size: 17px;
+  }
+  .back-to-top {
+    position: fixed;
+    display: -webkit-box;
+    background: linear-gradient(45deg, #dbb50c, #d8fd06);
+    color: #fff;
+    padding: 2px 20px 8px 20px;
+    font-size: 16px;
+    border-radius: 4px 4px 0 0;
+    right: 15px;
+    bottom: 0;
+    transition: ease;
+  }
+  
+  .back-to-top:focus {
+    background: linear-gradient(45deg, #1de099, #1dc8cd);
+    color: #ffffff;
+    outline: none;
+  }
+  
+  .back-to-top:hover {
+    background: #dbb50c;
+    color: #fff;
+  }
+ 
+  .sen{
+    background-color: #190F3A;
+	  color: #1dc8cd;
+    border-radius: 20px 20px 20px 20px;
+    padding: 15px;
+  }
+  .ful{
+    margin-top: 80px;
+  }
+  
