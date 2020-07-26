@@ -1,15 +1,16 @@
 {
   "name": "Recipe",
   "version": "1.0.0",
-  "description": "",
+  "description": "Recipe App",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js"
+    
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["recipeapp", "NodeJs","Express"],
+  "author": "Ogbonna Chinonso",
+  "license": " MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
