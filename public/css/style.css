@@ -61,7 +61,6 @@
 
   .navbar{
     background: #130c2b;
-    /* padding: 15px 10px; */
     height: 52px;
      position: fixed; 
     left: 0;
@@ -71,9 +70,13 @@
     z-index: 997;
   }
   li a:hover {
-    background-color: #ad0e02;
+    background-color: #02a7ad;
     color: #dbb50c;
   }
+  .navbar-nav{
+    background: #130c2b;
+  }
+  
   body {
     font-family: "Open Sans", sans-serif;
     overflow-x: hidden;

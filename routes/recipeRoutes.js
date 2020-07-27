@@ -126,84 +126,84 @@ router.post('/addrecipe', isAuthUser, verify.isAdmin, (req, res) => {
       req.flash('success_msg', 'Recipes Details Added Successfully')
       res.redirect('/dashboard')
     })
-     .catch(err => {
+    .catch(err => {
       req.flash('error_msg', 'ERROR: +err');
       console.error(err);
       res.redirect('/addrecipe');
     });
-  });
+});
 
-  router.get("/edit/:id", (req, res) => {
-    let searchQuery = { _id: req.params.id };
-    Meal.findOne(searchQuery)
-      .then(store => {
-        res.render("edit", { store });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+router.get("/edit/:id", (req, res) => {
+  let searchQuery = { _id: req.params.id };
+  Meal.findOne(searchQuery)
+    .then(store => {
+      res.render("edit", { store });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
-  router.post('/edit/:id', isAuthUser, verify.isAdmin,(req, res) => {
-    let searchQuery = { _id: req.params.id };
-  
-    Meal.updateOne(searchQuery, {
-      $set: {
-          name: req.body.name,
-          title: req.body.title,
-          ingredients: req.body.ingredients,
-          instructions: req.body.instructions,
-          img: req.body.img
+router.post('/edit/:id', isAuthUser, verify.isAdmin, (req, res) => {
+  let searchQuery = { _id: req.params.id };
+
+  Meal.updateOne(searchQuery, {
+    $set: {
+      name: req.body.name,
+      title: req.body.title,
+      ingredients: req.body.ingredients,
+      instructions: req.body.instructions,
+      img: req.body.img
+    }
+  })
+    .then(store => {
+      req.flash('success_msg', 'Recipe data updated successfully');
+      res.redirect('/dashboard');
+    })
+    .catch(err => {
+      req.flash('error_msg', 'ERROR: +err');
+      res.redirect('/dashboard');
+      console.error(err)
+    });
+});
+
+router.get('/search', (req, res) => {
+  res.render('search', { stores: "" });
+});
+
+router.post("/recipeSearch", (req, res) => {
+  let searchQuery = { name: req.body.name.toLowerCase() };
+    
+    Meal.find(searchQuery)
+    .then((stores) => {
+      if (!stores.length >= 1) {
+        req.flash("unavailability_message", "No stores is/are available under that title...");
+        return res.redirect("/details");
+      } else {
+        res.render("search", { stores: stores });
       }
     })
-      .then(store => {
-        req.flash('success_msg', 'Recipe data updated successfully');
-        res.redirect('/dashboard');
-      })
-      .catch(err => {
-        req.flash('error_msg', 'ERROR: +err');
-        res.redirect('/dashboard');
-        console.error(err)
-      });
-  });
- 
-  router.get('/search', (req, res) => {
-    res.render('search', { stores: "" });
-  });
-
-  router.post("/recipeSearch", (req, res) => {
-    let searchQuery = { name: req.body.name};
-  
-    Meal.find(searchQuery)
-      .then((stores) => {
-        if(!stores.length >= 1){
-           req.flash("unavailability_message", "No stores is/are available under that title...");
-         return res.redirect("/details");
-         }else{
-          res.render("search", { stores:stores });
-         }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  });
+    .catch((err) => {
+      console.error(err);
+    });
+});
 
 // details route
-  router.get('/details/:id', (req, res) => {
-    // let searchQuery = { title: req.body.title };
-    Meal.findOne( { _id: req.params.id } )
-      .then((store) => {
-        res.render('details', { store:store });
-      })
-      .catch(err => {
-        req.flash('error_msg', 'ERROR: +err');
-        res.redirect('/details');
-        console.error(err)
-      });
+router.get('/details/:id', (req, res) => {
+  // let searchQuery = { title: req.body.title };
+  Meal.findOne({ _id: req.params.id })
+    .then((store) => {
+      res.render('details', { store: store });
     })
+    .catch(err => {
+      req.flash('error_msg', 'ERROR: +err');
+      res.redirect('/details');
+      console.error(err)
+    });
+})
 
 
-    
+
 //delete request starts here
 router.post('/delete/:id', isAuthUser, verify.isAdmin, (req, res) => {
   let searchQuery = { _id: req.params.id };
@@ -219,13 +219,13 @@ router.post('/delete/:id', isAuthUser, verify.isAdmin, (req, res) => {
     });
 });
 //delete request ends here
-  //post request ends here
-  router.get('/contact',(req, res) => {
-    res.render('index')
-  });
-  
-    router.post('/send', (req, res) => {
-    const output = `
+//post request ends here
+router.get('/contact', (req, res) => {
+  res.render('index')
+});
+
+router.post('/send', (req, res) => {
+  const output = `
       <p>You have a new contact request</p>
       <h3>Contact Details</h3>
       <ul>  
@@ -237,41 +237,41 @@ router.post('/delete/:id', isAuthUser, verify.isAdmin, (req, res) => {
       <h3>Message</h3>
       <p>${req.body.message}</p>
     `;
-  
-    let transporter = nodemailer.createTransport({
-      host: 'mail.botgence.com.ng',
-      port: 465,
-      secure: true, // true for 465, false for other ports
-      auth: {
-          user: 'info@botgence.com.ng', // generated ethereal user
-          pass: '980750botgence.'  // generated ethereal password
-      },
-      tls:{
-        rejectUnauthorized:false
-      }
-    });
-  
-    // setup email data with unicode symbols
-    let mailOptions = {
-        from: '"Recipe" <info@botgence.com.ng>', // sender address
-        to: 'desmondubadire@yahoo.com', // list of receivers
-        subject: 'Message From Recipe App', // Subject line
-        text: '', // plain text body
-        html: output // html body
-    };
-  
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message sent: %s', info.messageId);   
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-  
-        res.render('message', {msg:'Your Email Has Been Sent Successfully'});
-    });
+
+  let transporter = nodemailer.createTransport({
+    host: 'mail.botgence.com.ng',
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: 'info@botgence.com.ng', // generated ethereal user
+      pass: '980750botgence.'  // generated ethereal password
+    },
+    tls: {
+      rejectUnauthorized: false
+    }
   });
 
+  // setup email data with unicode symbols
+  let mailOptions = {
+    from: '"Recipe" <info@botgence.com.ng>', // sender address
+    to: 'desmondubadire@yahoo.com', // list of receivers
+    subject: 'Message From Recipe App', // Subject line
+    text: '', // plain text body
+    html: output // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message sent: %s', info.messageId);
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+    res.render('message', { msg: 'Your Email Has Been Sent Successfully' });
+  });
+});
 
 
-  module.exports = router;
+
+module.exports = router;
