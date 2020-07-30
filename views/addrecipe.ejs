@@ -1,9 +1,7 @@
 <%- include('partials/header')-%>
-<div class="container mt-5 py-5 px-2 w-50 ">
-  
-    <%- include('partials/message')-%>
-    
+<div class="container mt-5 py-5 px-2 w-50 ">   
   <h2 class="mb-4 text-center">Add New Recipe</h2>
+  <%- include('partials/message')-%>
   <form action="/addrecipe" method="POST">
     <input type="text" name="name" class="form-control mt-2" placeholder="Recipe Name"  required>
     <input type="text" name="title" class="form-control mt-2" placeholder="Recipe Title" required>

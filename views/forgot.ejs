@@ -1,0 +1,15 @@
+<%- include('partials/header')-%>
+<h2 class=" mt-5 mb-3 text-center ">Forgot Password</h2>
+<div class="container mt-2  w-50 ">
+  <%- include('partials/message')-%>
+  <form action="/forgot" method="POST">
+    <div class="form-group px-0">
+      <input required type="email" name="email" class="form-control mt-2" placeholder="Enter Email">
+    </div>
+    
+    <button class="btn but btn-block mt-4" type="submit">Send Email</button>
+  </form>
+  <a class="float-right py-2" href="/login">Back to Login</a>
+</div>
+
+<%- include('partials/footer')-%>

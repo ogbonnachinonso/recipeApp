@@ -15,7 +15,9 @@ let adminSchema = new mongoose.Schema({
 role: {
     type: String,
     default: "Admin"
-}
+},
+resetPasswordToken : String,
+resetPasswordExpires : Date
 
 })
 adminSchema.plugin(passportLocalMongoose,{usernameField: 'username', emailField: 'email'});

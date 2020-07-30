@@ -3,51 +3,55 @@
 
 <%- include('partials/message') -%>
 
-  <% stores.forEach((store)=>{ %>
-<div class="card mb-5 w-75 rounded dashboard">
-  <div class="row no-gutters">
-    <div class="col-md-4 ">
-      <img src="<%= store.img %> " alt="card-img" class="card-img img-fluid" />
-    </div>
-    <div class="col-md-8 ">
-      <div class="card-body">
-        <h2 class="card-title dar">Name: <%= store.name %> </h2>
-        <hr />
-        <br />
-        
-        <p class="card-text dar"><b>Title: <%= store.title %>   </b></p>
-        <hr />
-        <br />
-        <p class="card-text dar"><b>ingredients: </b><%= store.ingredients %>  </p>
-        <hr />
-        <br />
-        <p  class="card-text dar"><b>instructions:</b><%= store.instructions %></p>
-        <hr />
-        <br />
-
-        
-        <a class="btn but" href="/edit/<%= store.id %>">Edit</a>
-        <form style="display: inline;" action="/delete/<%= store.id %>" method="POST">
-          <input type="hidden" name="_method" value="DELETE">
-          <button style="cursor: pointer;" type="submit" class="btn btn-danger ml-2">Delete</button>
-      </form>
-        
+<% stores.forEach((store)=>{ %>
+<div class="container">
+  <div class="card mb-5 w-90 rounded dashboard">
+    <div class="row no-gutters">
+      <div class="col-md-4 ">
+        <img src="<%= store.img %> " alt="card-img" class="card-img img-fluid" />
       </div>
-    </div>
+      <div class="col-md-8 ">
+        <div class="card-body">
+          <h2 class="card-title dar">Name: <%= store.name %> </h2>
+          <hr />
+          <br />
 
-  </div>
-</div>
-<% }) %>
-  <div class="container bash">
-    <div class="row ">
-      <div class="col-sm-12">
-        <div class="d-flex">
-        <a href="/addrecipe" class="btn btn-success">Add Recipe</a>
-        <a href="/logout" class="btn bit text-white" style="height: 38px; margin-left: 20px; margin-top: 0px;">Log Out</a>
+          <p class="card-text dar"><b>Title: <%= store.title %> </b></p>
+          <hr />
+          <br />
+          <p class="card-text dar"><b>ingredients: </b><%= store.ingredients %> </p>
+          <hr />
+          <br />
+          <p class="card-text dar"><b>instructions:</b><%= store.instructions %></p>
+          <hr />
+          <br />
+
+
+          <a class="btn but" href="/edit/<%= store.id %>">Edit</a>
+          <form style="display: inline;" action="/delete/<%= store.id %>" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <button style="cursor: pointer;" type="submit" class="btn btn-danger ml-2">Delete</button>
+          </form>
+
         </div>
       </div>
+
     </div>
   </div>
+</div>
+
+<% }) %>
+<div class="container bash">
+  <div class="row ">
+    <div class="col-sm-12">
+      <div class="d-flex">
+        <a href="/addrecipe" class="btn btn-success">Add Recipe</a>
+        <a href="/logout" class="btn bit text-white" style="height: 38px; margin-left: 20px; margin-top: 0px;">Log
+          Out</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

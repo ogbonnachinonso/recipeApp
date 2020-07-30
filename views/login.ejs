@@ -1,21 +1,25 @@
 <%- include('partials/header')-%>
 <main class="login-page">
-    <%- include('partials/message')-%>
-    <div class="container mt-5 py-3 ">
-      <div class="col-sm-12">
-        <div class="card login">
-          <div class="card-body">
-            <h2 class="mb-4 text-center ">Login</h2>
-            <form action="/login" method="POST">
-              <input required type="text" name="username" class="form-control mt-2" placeholder="Enter Username">
-              <!-- <input type="text" name="email" class="form-control mt-2" placeholder="Enter Email"> -->
-              <input required type="password" name="password" class="form-control mt-2" placeholder="Enter Password">
-              <button class="btn but btn-block mt-4"  type="submit">Login</button>
-            </form>
-          </div>
-          <a class="text-center mt-3 mb-3" href="/signup">Sign Up</a>
+
+  <div class="container mt-5 py-3 ">
+    <div class="col-sm-12">
+      <div class="card login">
+        <div class="card-body">
+          <h2 class="mb-4 text-center ">Login</h2>
+          <%- include('partials/message')-%>
+          <form action="/login" method="POST">
+            <input required type="text" name="username" class="form-control mt-2" placeholder="Enter Username">
+
+            <input required type="password" name="password" class="form-control mt-2" placeholder="Enter Password">
+            <button class="btn but btn-block mt-4" type="submit">Login</button><br>
+            <div class="float-right text-danger py-2"><a href="/forgot">Forgot Password</a></div><br>
+            <a class="btn but btn-block mt-4" href="/signup">Sign Up</a>
+          </form>
         </div>
+
+        <!-- <button class="btn but btn-block mt-4"  type="submit">Sign Up</button> -->
       </div>
     </div>
+  </div>
 </main>
 <%- include('partials/footer')-%>

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const crypto = require('crypto');
+const async = require('async');
 const nodemailer = require('nodemailer');
 const Meal = require('../models/data/mealModels');
 const Admin = require('../models/data/adminModels');
@@ -11,6 +13,7 @@ function isAuthUser(req, res, next) {
   if (req.isAuthenticated()) {
     return next()
   }
+  req.flash("error_msg", "Please Login in fisrt to access this page");
   res.redirect('/login');
 }
 
@@ -24,27 +27,130 @@ router.get('/signup', (req, res) => {
   res.render('signup');
 });
 
+router.get('/changepassword', (req, res) => {
+  res.render('change');
+});
+
+router.get('/password/new', (req, res) => {
+  res.render('newpassword');
+});
+
+router.get('/forgot', (req, res) => {
+  res.render('forgot');
+});
+
+router.get('/reset/:token', (req, res) => {
+  Admin.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } })
+    .then(user => {
+      if (!user) {
+        req.flash('error_msg', 'Password reset token is invalid or has expired');
+        res.redirect('/forgot');
+      }
+      res.render('change', { token: req.params.token });
+    })
+    .catch(err => {
+      req.flash('error_msg', 'ERROR:' + err);
+      res.redirect('/forgot');
+    })
+});
+//Post New Password Route
+router.post('/password/new', isAuthUser, (req, res) => {
+ if(req.body.password !== req.body.confirmpassword){
+  req.flash('error_msg', "Password don't match. Type Again!");
+  return res.redirect('/password/new');
+ }
+ Admin.findOne({email: req.user.email})
+ .then(user =>{
+   user.setPassword(req.body.password, err=>{
+     user.save()
+     .then(user =>{
+       req.flash('success_msg', 'Password Changed Successfully.');
+       res.redirect('/dashboard')
+     })
+     .catch(err =>{
+       req.flash('error_msg', 'ERROR: '+ err);
+       res.redirect('/password/new');
+     })
+   })
+ })
+ 
+});
+//Post Reset Route
+router.post('/reset/:token', (req, res) => {
+  async.waterfall([
+    (done) => {
+      Admin.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } })
+        .then(user => {
+          if (!user) {
+            req.flash('error_msg', 'Password reset token is invalid or has expired');
+            res.redirect('/forgot');
+          }
+          if (req.body.password !== req.body.confirmpassword) {
+            req.flash('error_msg', "Password don't match");
+            return res.redirect('/forgot');
+          }
+          user.setPassword(req.body.password, err => {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+
+            user.save(err => {
+              req.logIn(user, err => {
+                done(err, user);
+              })
+            });
+          });
+        })
+        .catch(err => {
+          req.flash('error_msg', 'ERROR:' + err);
+          res.redirect('/forgot');
+        });
+    },
+    (user) => {
+      let smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: process.env.GMAIL_EMAIL,
+          pass: process.env.GMAIL_PASSWORD
+        }
+      });
+      let mailOptions = {
+        to: user.email,
+        from: 'Desmond chinonsoubadire2@gmail.com',
+        subject: 'Your Password is changed',
+        text: 'Hello, ' + user.username + '\n\n' +
+          'This is a confirmation that the password for your account' + user.email + 'has been changed.'
+      };
+      smtpTransport.sendMail(mailOptions, err => {
+        req.flash('success_msg', 'Email sent with further instructions. Please check that.');
+        res.redirect('/login');
+      });
+    }
+  ], err => {
+    res.redirect('/login');
+  });
+});
+
 //signup post route
-router.post('/signup',  (req, res) => {
-  let { username, password } = req.body;
+router.post('/signup', (req, res) => {
+  let { username, email, password } = req.body;
   let userData = {
-    username
+    username: username,
+    email: email
   };
   Admin.findOne({ username: req.body.username }, function (err, user) {
     if (err)
       console.log(err);
     if (user) {
-      req.flash("error_msg", "A user with that username already exists...");
+      req.flash("error_msg", "A user with that email already exists...");
       res.redirect("/signup");
     } else {
-      Admin.register(userData, password, (err) => {
+      Admin.register(userData, password, (err, user) => {
         if (err) {
-          console.log(err)
+          req.flash("error_msg", "ERROR:" + err);
           res.redirect('/signup');
         }
         passport.authenticate('local')(req, res, () => {
           req.flash("success_msg", "Account Created Successfully");
-          console.log('Account Created Successfully');
           res.redirect('/login')
         });
       });
@@ -55,16 +161,72 @@ router.post('/signup',  (req, res) => {
 // login post route
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/dashboard',
-  falureRedirect: '/login'
+  failureRedirect: '/login',
+  failureFlash: 'Invalid email or password. Try again!!'
 }))
 
+//Post route forgot password
+router.post('/forgot', (req, res, next) => {
+  let recoveryPassword = '';
+  async.waterfall([
+    (done) => {
+      crypto.randomBytes(20, (err, buf) => {
+        let token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    (token, done) => {
+      Admin.findOne({ email: req.body.email })
+        .then(user => {
+          if (!user) {
+            req.flash('error_msg', 'user does not exist with this email');
+            return res.redirect('/forgot');
+          }
+          user.resetPasswordToken = token;
+          user.resetPasswordExpires = Date.now() + 1800000; //1/2 hour
 
-router.get('/logout', (req, res) => {
+          user.save(err => {
+            done(err, token, user);
+          });
+        })
+        .catch(err => {
+          req.flash('error_msg', 'ERROR:' + err);
+          res.redirect('/forgot');
+        })
+    },
+    (token, user) => {
+      let smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: process.env.GMAIL_EMAIL,
+          pass: process.env.GMAIL_PASSWORD
+        }
+      });
+      let mailOptions = {
+        to: user.email,
+        from: 'Desmond chinonsoubadire2@gmail.com',
+        subject: 'Recovery Email from Recipe App',
+        text: 'Please click the following link to recover your password:\n\n' +
+          'http://' + req.headers.host + '/reset/' + token + '\n\n' + 'If you did not request this, please ignore this email.'
+      };
+      smtpTransport.sendMail(mailOptions, err => {
+        req.flash('success_msg', 'Email sent with further instructions. Please check that.');
+        res.redirect('/forgot');
+      })
+    }
+  ], err => {
+    if (err) res.redirect('/forgot');
+  });
+});
+
+// Get route logout
+router.get('/logout', isAuthUser,(req, res) => {
   req.logout();
   req.flash('success_msg', 'You Are logged Out')
   res.redirect('/login');
 })
 
+// Get route dashboard
 const verify = require("../role");
 
 router.get("/dashboard", isAuthUser, verify.isAdmin, (req, res) => {
@@ -79,7 +241,7 @@ router.get("/dashboard", isAuthUser, verify.isAdmin, (req, res) => {
 });
 
 
-
+// Get routes home
 router.get("/", (req, res) => {
   Meal.find({})
     .then(stores => {
@@ -91,12 +253,13 @@ router.get("/", (req, res) => {
     })
 });
 
+// Get routes addrecipe
 router.get('/addrecipe', (req, res) => {
   res.render('addrecipe');
 });
 
 
-// ///
+// Get routes edit/:id
 router.get('/edit/:id', isAuthUser, verify.isAdmin, (req, res) => {
 
   let searchQuery = { _id: req.params.id };
@@ -112,7 +275,7 @@ router.get('/edit/:id', isAuthUser, verify.isAdmin, (req, res) => {
     });
 });
 //post request starts here
-router.post('/addrecipe', isAuthUser, verify.isAdmin,(req, res) => {
+router.post('/addrecipe', isAuthUser, verify.isAdmin, (req, res) => {
   let newMeal = {
     name: req.body.name,
     title: req.body.title,
@@ -173,8 +336,8 @@ router.get('/search', (req, res) => {
 
 router.post("/recipeSearch", (req, res) => {
   let searchQuery = { name: req.body.name.toLowerCase() };
-    
-    Meal.find(searchQuery)
+
+  Meal.find(searchQuery)
     .then((stores) => {
       if (!stores.length >= 1) {
         req.flash("unavailability_message", "No stores is/are available under that title...");
@@ -253,7 +416,7 @@ router.post('/send', (req, res) => {
 
   // setup email data with unicode symbols
   let mailOptions = {
-    from: '"Recipe" <info@botgence.com.ng>', // sender address
+    from: 'Desmond chinonsoubadire2@gmail.com', // sender address
     to: 'desmondubadire@yahoo.com', // list of receivers
     subject: 'Message From Recipe App', // Subject line
     text: '', // plain text body

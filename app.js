@@ -3,17 +3,19 @@ const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 
-const recipeRoutes = require('./routes/recipeRoutes');
-const Admin = require('./models/data/adminModels');
-const Meal = require('./models/data/mealModels');
 const path = require('path');
 
 const methodOverride = require('method-override');
-const passport = require('passport');
 const session = require('express-session');
+const passport = require('passport');
+const localStrategy = require('passport-local').Strategy;
 const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
-const localStrategy = require('passport-local');
+
+
+const recipeRoutes = require('./routes/recipeRoutes');
+const Admin = require('./models/data/adminModels');
+const Meal = require('./models/data/mealModels');
 
 
 const app = express();
@@ -28,7 +30,7 @@ app.use(bodyParser.json());
 
 
 //mongoose setup
-mongoose.connect(process.env.DATABASE_REMOTE, {
+mongoose.connect(process.env.DATABASE_LOCAL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -65,6 +67,7 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash(('success_msg'));
   res.locals.error_msg = req.flash(('error_msg'));
+  res.locals.error = req.flash(('error'));
   res.locals.currentUser = req.user;
   next();
 })
