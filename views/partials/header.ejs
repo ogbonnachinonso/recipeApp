@@ -23,12 +23,8 @@
         <!-- Brand -->
         <a class="navbar-brand" href=""><img src="../images/UR.png" width="20px" height="30px" class="scrollto"
             alt="Recipe" style="width: 80px;" class="mb-3" /></a>
-        <% if(!currentUser){%>
-        <a class="nav-link text-warning ml-2" href="/login">Login</a>
-        <a class="nav-link text-warning ml-2" href="/search" target="_blank">Search</a>
-        <%} %>
         <!-- Toggler/collapsibe Button -->
-        <% if(currentUser){%>
+      
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -52,9 +48,8 @@
             <li class="nav-item">
               <a class="nav-link text-warning ml-2" href="/search" target="_blank">Search</a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link text-warning ml-2" href="#"><%= currentUser. username %> </a>
-            </li> -->
+            <% if(currentUser){%>
+  
             <!-- Dropdown -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
