@@ -5,8 +5,8 @@
     
   <h2 class="mb-4 text-center">Edit Recipe</h2>
   <form action="/edit/<%= store.id %>" method="POST">  
-    <input type="text" name="name" class="form-control mt-2" placeholder="Recipe Name" value="<%= store.name %>">
-    <input type="text" name="title" class="form-control" placeholder="Recipe Title" value="<%= store.title %>">
+    <input type="text" name="category" class="form-control mt-2" placeholder="Recipe Category" value="<%= store.category %>">
+    <input type="text" name="name" class="form-control" placeholder="Recipe Name" value="<%= store.name %>">
     
     <input type="text" name="ingredients" class="form-control" placeholder="Recipe Ingredients" value="<%= store.ingredients %>">
     <input type="text" name="instructions" class="form-control" placeholder="Recipe Instruction" value="<%= store.instructions %>">

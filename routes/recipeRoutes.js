@@ -55,25 +55,25 @@ router.get('/reset/:token', (req, res) => {
 });
 //Post New Password Route
 router.post('/password/new', isAuthUser, (req, res) => {
- if(req.body.password !== req.body.confirmpassword){
-  req.flash('error_msg', "Password don't match. Type Again!");
-  return res.redirect('/password/new');
- }
- Admin.findOne({email: req.user.email})
- .then(user =>{
-   user.setPassword(req.body.password, err=>{
-     user.save()
-     .then(user =>{
-       req.flash('success_msg', 'Password Changed Successfully.');
-       res.redirect('/dashboard')
-     })
-     .catch(err =>{
-       req.flash('error_msg', 'ERROR: '+ err);
-       res.redirect('/password/new');
-     })
-   })
- })
- 
+  if (req.body.password !== req.body.confirmpassword) {
+    req.flash('error_msg', "Password don't match. Type Again!");
+    return res.redirect('/password/new');
+  }
+  Admin.findOne({ email: req.user.email })
+    .then(user => {
+      user.setPassword(req.body.password, err => {
+        user.save()
+          .then(user => {
+            req.flash('success_msg', 'Password Changed Successfully.');
+            res.redirect('/dashboard')
+          })
+          .catch(err => {
+            req.flash('error_msg', 'ERROR: ' + err);
+            res.redirect('/password/new');
+          })
+      })
+    })
+
 });
 //Post Reset Route
 router.post('/reset/:token', (req, res) => {
@@ -220,7 +220,7 @@ router.post('/forgot', (req, res, next) => {
 });
 
 // Get route logout
-router.get('/logout', isAuthUser,(req, res) => {
+router.get('/logout', isAuthUser, (req, res) => {
   req.logout();
   req.flash('success_msg', 'You Are logged Out')
   res.redirect('/login');
@@ -275,10 +275,10 @@ router.get('/edit/:id', isAuthUser, verify.isAdmin, (req, res) => {
     });
 });
 //post request starts here
-router.post('/addrecipe', isAuthUser, verify.isAdmin,  (req, res) => {
+router.post('/addrecipe', isAuthUser, verify.isAdmin, (req, res) => {
   let newMeal = {
+    category: req.body.category,
     name: req.body.name,
-    title: req.body.title,
     ingredients: req.body.ingredients,
     instructions: req.body.instructions,
     img: req.body.img
@@ -312,8 +312,8 @@ router.post('/edit/:id', isAuthUser, verify.isAdmin, (req, res) => {
 
   Meal.updateOne(searchQuery, {
     $set: {
+      category: req.body.category,
       name: req.body.name,
-      title: req.body.title,
       ingredients: req.body.ingredients,
       instructions: req.body.instructions,
       img: req.body.img
@@ -335,7 +335,7 @@ router.get('/search', (req, res) => {
 });
 
 router.post("/recipeSearch", (req, res) => {
-  let searchQuery = { name: req.body.name.toLowerCase() };
+  let searchQuery = { category: req.body.category.toLowerCase() };
 
   Meal.find(searchQuery)
     .then((stores) => {

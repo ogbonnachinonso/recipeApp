@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 let mealSchema = new mongoose.Schema({
-  name: {
+ category: {
     type: String,
     required: true,
   },
-  title: {
+  name: {
     type: String,
     required: true,
   },

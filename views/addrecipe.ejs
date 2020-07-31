@@ -3,8 +3,8 @@
   <h2 class="mb-4 text-center">Add New Recipe</h2>
   <%- include('partials/message')-%>
   <form action="/addrecipe" method="POST">
-    <input type="text" name="name" class="form-control mt-2" placeholder="Recipe Name"  required>
-    <input type="text" name="title" class="form-control mt-2" placeholder="Recipe Title" required>
+    <input type="text" name="category" class="form-control mt-2" placeholder="Recipe Category"  required>
+    <input type="text" name="name" class="form-control mt-2" placeholder="Recipe Name" required>
     
     <input type="text" name="ingredients" class="form-control mt-2" placeholder="Recipe Ingredients" required>
     <input type="text" name="instructions" class="form-control mt-2" placeholder="Recipe Instructions" required>

@@ -4,8 +4,8 @@
     <div class="card col-sm-8 col-md-12  mb-2 pb-2 search">
       <h1 class="text-center mt-5 mb-2 text-white" id="search"> Search your Recipes here</h1>
       <form action="/recipeSearch " method="POST" class=" d-flex mt-2">
-        <input type="search" list="name" name="name" class="form-control mr-4" placeholder="Enter Recipe name here.." store="name" width="400px">
-        <datalist id="name">
+        <input type="search" list="category" name="category" class="form-control mr-4" placeholder="Enter Recipe category here.." store="category" width="400px">
+        <datalist id="category">
           <option value="snacks">
             <option value="breakfast">
               <option value="soup">
@@ -33,10 +33,10 @@
               <img class="card-img-center rounded-circle mx-auto mt-2" src="<%= store.img %>" alt="Card image" style="height:200px; width: 80%;">
               <div class="card-body">
                 <h4 class="card-title text-info">
-                  <%= store.name %>
+                  <%= store.category %>
                 </h4>
                 <p class="card-text text-info">
-                  <%= store.title %>
+                  <%= store.name %>
                 </p>
                 <a href="details/<%= store.id%>" class="btn butt text-white">See full details</a>
               </div>

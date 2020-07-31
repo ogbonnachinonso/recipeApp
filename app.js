@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 
 
 //mongoose setup
-mongoose.connect(process.env.DATABASE_REMOTE, {
+mongoose.connect(process.env.DATABASE_LOCAL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
