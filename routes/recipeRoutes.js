@@ -275,7 +275,7 @@ router.get('/edit/:id', isAuthUser, verify.isAdmin, (req, res) => {
     });
 });
 //post request starts here
-router.post('/addrecipe', isAuthUser, verify.isAdmin, (req, res) => {
+router.post('/addrecipe', isAuthUser, verify.isAdmin,  (req, res) => {
   let newMeal = {
     name: req.body.name,
     title: req.body.title,
