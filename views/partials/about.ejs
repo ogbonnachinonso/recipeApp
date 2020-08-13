@@ -4,17 +4,17 @@
     <div class="section-header">
       <h1 class="section-title text-center">About Us</h1><hr>
       <span class="section-divider"></span>
-      <p class="section-description">
+      <p class="section-description px-4 text-center">
         In Recipe App we provide you with an opportunity to source for different sets of guidelines for preparing different recipes which helps you to learn how to make different dishes. 
     </div>
     <div class="row">
       <div class="col-lg-6 about-img wow fadeInLeft">
-        <img src="../images/brooke.jpg" width="100%" alt="">
+        <img src="../images/brooke.png" width="100%" alt="">
       </div>
 
       <div class="col-lg-6 content wow fadeInRight">
-        <h2 class="dar">Search</h2>
-        <p> Here in Recipe app we have different types of recipes which are sorted by meal types. Click on the search link above to find different meal types such as seen in the list below.</p>
+        <h4 class="px-4">Categories</h4>
+        <p class="text-center dar px-4"> Here in Recipe app we have different types of recipes which are sorted by meal types. Click on the search link above to find different meal types such as seen in the list below.</p>
 
         <ul>
           <li>
@@ -32,8 +32,9 @@
           <li>
             <i class="ion-android-checkmark-circle"></i>Stew </li>
         </ul>
-        <h2 class="dar">Add</h2>
-        <p> You can  add to our lists of recipes by clicking the addrecipe link above to enable others to learn from you too. 
+        <h4 class="px-4">Contribute to Recipe</h4>
+        <p class="text-center dar px-4"> You can  add to our lists of recipes by clicking this <a
+          href="https://bit.ly/313kjCh" target="_blank" class="text-warning">link</a> to enable others to learn from you too. 
       </div>
     </div>
 
@@ -53,11 +54,11 @@
 <div class="contact-about">
   <h3>
     <strong>
-      <small>Recipe App</small>
+      <small class="px-4">Recipe App</small>
     </strong>
   </h3>
-  <p>For further information, enquiries and or assistance, contact us through the following links below. You can as well reach us via email and phone through the email and number below </p>
-  <div class="social-links">
+  <p class="text-center dar px-4">For further information, enquiries and or assistance, contact us through the following links below. You can as well reach us via email and phone through the email and number below </p>
+  <div class="social-links px-4 icon">
     <a href="#" class="twitter">
       <i class="fa fa-twitter"></i>
     </a>
@@ -79,18 +80,18 @@
 
 <div class="col-lg-3 col-md-4">
 <div class="info">
-  <div>
+  <div class="text-center dar px-4">
     <i class="ion-ios-location-outline"></i>
     <p>Locate us @ 7 factory Road Aba
       <br>Abia state, Nigeria</p>
   </div>
 
-  <div>
+  <div class="text-center dar">
     <i class="ion-ios-email-outline"></i>
     <p><i>desmondubadire@gmail.com</i></p>
   </div>
 
-  <div>
+  <div class="text-center dar px-4">
     <i class="ion-ios-telephone-outline"></i>
     <p>08107583440</p>
   </div>
@@ -100,7 +101,7 @@
 
 <div class="col-lg-5 col-md-8">
 <div class="form">
-  <div id="sendmessage">Message Us</div>
+  <div id="sendmessage" class="text-center">Message Us</div>
   <br>
   <div id="errormessage"></div>
   <form action="" method="post" role="form" class="contactForm">
@@ -115,13 +116,17 @@
           data-rule="email" data-msg="Please enter a valid email" />
         <div class="validation"></div>
       </div>
-    </div>
-    <div class="form-group">
+      <div class="form-group col-lg-6">
+        <input type="number" class="form-control" name="phone" id="phone" placeholder="Your Phone Number" data-rule="minlen:11" data-msg="Please enter a valid number"
+        />
+        <div class="validation"></div>
+      </div>
+    <div class="form-group col-lg-6">
       <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"
         data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
       <div class="validation"></div>
     </div>
-    <div class="form-group">
+    <div class="form-group col-lg-12">
       <textarea class="form-control" name="message" rows="5" data-rule="required"
         data-msg="Please write something for us" placeholder="Message"></textarea>
       <div class="validation"></div>

@@ -1,52 +1,53 @@
 <%- include('partials/header')-%>
-  <div class="container mt-4 ">
-    <h1 class=" text-center dea">Welcome</h1>
-    <div class="card col-sm-8 col-md-12  mb-2 pb-2 search">
-      <h1 class="text-center mt-5 mb-2 text-white" id="search"> Search your Recipes here</h1>
-      <form action="/recipeSearch " method="POST" class=" d-flex mt-2">
-        <input type="search" list="category" name="category" class="form-control mr-4" placeholder="Enter Recipe category here.." store="category" width="400px">
-        <datalist id="category">
-          <option value="snacks">
-            <option value="breakfast">
-              <option value="soup">
-                <option value="stew">
-                  <option value="dinner">
-                    <option value="lunch">
+<div class="container mt-4 ">
+  <div class="card col-sm-8 col-md-12  mb-2 pb-2 dea search">
+    <h1 class="text-center mt-5 mb-2 text-white" id="search"> Search your Recipes here</h1>
+    <form action="/recipeSearch " method="POST" class=" d-flex mt-2">
+      <input type="search" list="category" name="category" class="form-control mr-4"
+        placeholder="Enter Recipe category here.." store="category" width="400px">
+      <datalist id="category">
+        <option value="snacks">
+        <option value="breakfast">
+        <option value="soup">
+        <option value="stew">
+        <option value="dinner">
+        <option value="lunch">
 
-                    </datalist>
-        <br>
-        <button type="submit" class="btn butt text-white  ">
-          <i class="fa fa-search fa-1x px-5"></i>
-        </button>
-      </form>
-      
-    </div>
-  </div>
+      </datalist>
+      <br>
+      <button type="submit" class="btn butt text-white  ">
+        <i class="fa fa-search fa-1x px-5"></i>
+      </button>
+    </form>
 
-  <h2 class="dar text-center mt-3 py-4">Search Results Appears Here</h2>
-  <div class="container">
-    <div class="row ">
-      <% if (stores){%>
-        <% stores.forEach(store => { %>
-          <div class="col-sm-4 col-md-3 py-4 name-collection">
-            <div class="card text-center mx-auto dark">
-              <img class="card-img-center rounded-circle mx-auto mt-2" src="<%= store.img %>" alt="Card image" style="height:200px; width: 80%;">
-              <div class="card-body">
-                <h4 class="card-title text-info">
-                  <%= store.category %>
-                </h4>
-                <p class="card-text text-info">
-                  <%= store.name %>
-                </p>
-                <a href="details/<%= store.id%>" class="btn butt text-white">See full details</a>
-              </div>
-            </div>
-          </div>
-          <% })%>
-            <% } %>
-    </div>
   </div>
-  <br>
-  <%- include('partials/about') -%>
-  
-  <%- include('partials/footer') -%>
+</div>
+
+<h2 class="dar text-center mt-3 py-4">Search Results Appears Here ...</h2>
+<div class="container">
+  <div class="row ">
+    <% if (stores){%>
+    <% stores.forEach(store => { %>
+    <div class="col-sm-4 col-md-3 py-4 name-collection">
+      <div class="card text-center mx-auto dark">
+        <img class="card-img-center rounded-circle mx-auto mt-2" src="<%= store.img %>" alt="Card image"
+          style="height:200px; width: 80%;">
+        <div class="card-body">
+          <h4 class="card-title text-info">
+            <%= store.category %>
+          </h4>
+          <p class="card-text text-info">
+            <%= store.name %>
+          </p>
+          <a href="details/<%= store.id%>" class="btn butt text-white">See full details</a>
+        </div>
+      </div>
+    </div>
+    <% })%>
+    <% } %>
+  </div>
+</div>
+<br>
+<%- include('partials/about') -%>
+
+<%- include('partials/footer') -%>
