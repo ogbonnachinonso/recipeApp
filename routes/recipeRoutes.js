@@ -416,7 +416,7 @@ router.post('/send', (req, res) => {
 
   // setup email data with unicode symbols
   let mailOptions = {
-    from: '"Desmond" <info@botgence.com.ng>', // sender address
+    from: '"Desmond" chinonsoubadire2@gmail.com', // sender address
     to: 'desmondubadire@yahoo.com', // list of receivers
     subject: 'Message From Recipe App', // Subject line
     text: '', // plain text body
