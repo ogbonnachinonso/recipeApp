@@ -402,24 +402,19 @@ router.post('/send', (req, res) => {
     `;
 
   let transporter = nodemailer.createTransport({
-    host: 'mail.botgence.com.ng',
-    port: 465,
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: 'info@botgence.com.ng', // generated ethereal user
-      pass: '980750botgence.'  // generated ethereal password
-    },
-    tls: {
-      rejectUnauthorized: false
-    }
+    service: 'Gmail',
+        auth: {
+          user: process.env.GMAIL_EMAIL,
+          pass: process.env.GMAIL_PASSWORD
+        }
   });
 
   // setup email data with unicode symbols
   let mailOptions = {
-    from: '"Desmond" <info@botgence.com.ng>', // sender address
-    to: 'desmondubadire@yahoo.com', // list of receivers
+    from: req.body.email, // sender address
+    to: 'minnahogbu@gmail.com', // list of receivers
     subject: 'Message From Recipe App', // Subject line
-    text: '', // plain text body
+    text: req.body.message, // plain text body
     html: output // html body
   };
 

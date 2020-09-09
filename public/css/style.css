@@ -132,7 +132,7 @@
   overflow: hidden;
 }
 .im{
-  height: 180px;
+  height: auto;
 }
 .me{
   height: 300px;
