@@ -402,7 +402,10 @@ router.post('/send', (req, res) => {
     `;
 
   let transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // use SSL
+    // service: 'Gmail',
         auth: {
           user: process.env.GMAIL_EMAIL,
           pass: process.env.GMAIL_PASSWORD
@@ -429,6 +432,8 @@ router.post('/send', (req, res) => {
     res.render('message', { msg: 'Your Email Has Been Sent Successfully' });
   });
 });
+
+
 
 
 
