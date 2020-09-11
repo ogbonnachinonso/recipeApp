@@ -4,27 +4,27 @@
   <!-- The slideshow -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="../images/dangold.png" alt="Rice" style="width: 100%; min-height: 150px;" class="go mt-2 ">
+      <img src="../images/dangold.png" alt="Rice" style="width: 100%; min-height: 150px;" class="go mt ">
       <div class="carousel-caption">
-        <h1>Recipes</h1>
+        <h1 class="text-color">Recipes</h1>
       </div>
     </div>
     <div class="carousel-item">
       <img src="../images/brooke.png" alt="Salad" style="width: 100%; min-height: 150px;" class="go">
       <div class="carousel-caption">
-        <h1 class="text-info">Breakfast</h1>
+        <h1 class="text-color">Breakfast</h1>
       </div>
     </div>
     <div class="carousel-item">
       <img src="../images/lily.png" alt="beavrages" style="width: 100%; min-height: 150px;" class="go">
       <div class="carousel-caption">
-        <h1 class="text-white">Lunch</h1>
+        <h1 class="text-color">Lunch</h1>
       </div>
     </div>
     <div class="carousel-item">
       <img src="../images/brooke.png" alt="beavrages" style="width: 100%; min-height: 150px;" class="go">
       <div class="carousel-caption">
-        <h1 class="text-info">Dinner</h1>
+        <h1 class="text-color">Dinner</h1>
       </div>
     </div>
   </div>
@@ -39,8 +39,8 @@
 </div>
 
 <section class="lists-page">
-<div class="mt-2 text-center">
-  <p class="px-4 ppp">Recipe App is an amazing platform for finding different recipe, learning how to prepare each recipe and get it to a finished meal. </p>
+<div class="mt-4 text-center">
+  <p class="px-4 ppp">Quickcook is an amazing platform for finding different recipe, learning how to prepare each recipe and get it to a finished meal. </p>
 </div>
 <div class="mt-2 text-center">
   <p class="px-4 ppp">We provide you with sets of
@@ -49,8 +49,8 @@
 </div>
 <div class="mt-2 mb-5 text-center">
   <p class="px-4  ppp">You can add to the list by clicking on <a
-    href="https://bit.ly/313kjCh" target="_blank" class="text-warning">Add Recipe</a>. Also for easy access, you can search
-  for a meal type by clicking on <br> <a href="/search" target="_blank" class="text-warning">Search</a> to get search results for a particular meal type recipe</p>
+    href="https://bit.ly/313kjCh" target="_blank" class="text-color">Add Recipe</a>. Also for easy access, you can search
+  for a meal type by clicking on <br> <a href="/search" target="_blank" class="text-color">Search</a> to get search results for a particular meal type recipe</p>
   <hr class="ppp w-75">
 </div>
  
@@ -59,11 +59,11 @@
     <div class="row text-center">
       <% stores.forEach((store)=>{ %>
       <div class="col-sm-3">
-        <div class="card mt-3 rounded shadow-lg">
+        <div class="card mt-3 mb-4 rounded shadow-lg card-bg">
           <div class="card-body img">
             <img class="card-img-top img-fluid im" src="<%= store.img %>" alt="Card image" />
             <p class="card-text mt-4">
-              <a href="/details/<%= store.id %>" class="btn but"><%= store.name %></a>
+              <a href="/details/<%= store.id %>" class="btn btn"><%= store.name %></a>
             </p>
           </div>
         </div>
