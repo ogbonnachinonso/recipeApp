@@ -401,28 +401,30 @@ router.post('/send', (req, res) => {
       <p>${req.body.message}</p>
     `;
 
-  let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // use SSL
-    // service: 'Gmail',
-        auth: {
-          user: process.env.GMAIL_EMAIL,
-          pass: process.env.GMAIL_PASSWORD
-        }
-  });
+
+
+    let transport = nodemailer.createTransport({
+      host: "smtp.mailtrap.io",
+      port: 2525,
+      auth: {
+        user: "5c45eea5672f36",
+        pass: "70b8eb187fa5d5"
+      }
+    });
+
+
 
   // setup email data with unicode symbols
   let mailOptions = {
     from: req.body.email, // sender address
     to: 'minnahogbu@gmail.com', // list of receivers
-    subject: 'Message From Recipe App', // Subject line
+    subject: 'Message From QuickCook', // Subject line
     text: req.body.message, // plain text body
     html: output // html body
   };
 
   // send mail with defined transport object
-  transporter.sendMail(mailOptions, (error, info) => {
+  transport.sendMail(mailOptions, (error, info) => {
     if (error) {
       return console.log(error);
     }
