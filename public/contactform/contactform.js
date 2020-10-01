@@ -89,29 +89,53 @@ jQuery(document).ready(function($) {
       }
     });
     if (ferror) return false;
-    else var str = $(this).serialize();
-    var action = $(this).attr('action');
-    if( ! action ) {
-      action = 'contactform/contactform.php';
-    }
-    $.ajax({
-      type: "POST",
-      url: action,
-      data: str,
-      success: function(msg) {
-        // alert(msg);
-        if (msg == 'OK') {
-          $("#sendmessage").addClass("show");
-          $("#errormessage").removeClass("show");
-          $('.contactForm').find("input, textarea").val("");
-        } else {
-          $("#sendmessage").removeClass("show");
-          $("#errormessage").addClass("show");
-          $('#errormessage').html(msg);
-        }
 
-      }
-    });
+    var this_form = $(this);
+    var action = $(this).attr('action');
+
+    if( ! action ) {
+      this_form.find('.loading').slideUp();
+      this_form.find('.error-message').slideDown().html('The form action property is not set!');
+      return false;
+    }
+    
+    this_form.find('.sent-message').slideUp();
+    this_form.find('.error-message').slideUp();
+    this_form.find('.loading').slideDown();
+
+    if ( $(this).data('recaptcha-site-key') ) {
+      var recaptcha_site_key = $(this).data('recaptcha-site-key');
+      grecaptcha.ready(function() {
+        grecaptcha.execute(recaptcha_site_key, {action: 'email_form_submit'}).then(function(token) {
+          email_form_submit(this_form,action,this_form.serialize() + '&recaptcha-response=' + token);
+        });
+      });
+    } else {
+      email_form_submit(this_form,action,this_form.serialize());
+    }
+    // else var str = $(this).serialize();
+    // var action = $(this).attr('action');
+    // if( ! action ) {
+    //   action = 'contactform/contactform.php';
+    // }
+    // $.ajax({
+    //   type: "POST",
+    //   url: action,
+    //   data: str,
+    //   success: function(msg) {
+    //     // alert(msg);
+    //     if (msg == 'OK') {
+    //       $("#sendmessage").addClass("show");
+    //       $("#errormessage").removeClass("show");
+    //       $('.contactForm').find("input, textarea").val("");
+    //     } else {
+    //       $("#sendmessage").removeClass("show");
+    //       $("#errormessage").addClass("show");
+    //       $('#errormessage').html(msg);
+    //     }
+
+    //   }
+    // });
     return false;
   });
 

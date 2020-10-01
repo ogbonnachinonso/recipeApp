@@ -22,4 +22,18 @@ jQuery(document).ready(function($) {
     }, 1500, 'easeInOutExpo');
     return false;
   });
+
+  //
+  
+$(function () {
+  $(".box-hidden").slice(0, 8).show();
+  $("#LoadMore").on('click',function (e) {
+    e.preventDefault();
+    $(".box-hidden:hidden").slice(0, 4).slideDown();
+    if($(".box-hidden:hidden").length == 0) {
+      $("#Load").fadeOut('slow');
+    }
+  });
+  
+});
 });
